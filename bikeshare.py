@@ -191,20 +191,24 @@ def user_stats(df):
     print('-'*40)
 
 
+def prompt_more_data(df):
+    i = 0
+    more_data = input('\nWould you like to see the first 5 rows of raw data? Enter yes or no:\n')
+    while more_data.lower() == 'yes':
+        df_slice = df.iloc[i:i+5]
+        print(df_slice)
+        i += 5
+        more_data = input('\nWould you like to see the next 5 rows of raw data? Enter yes or no:\n')
+
+
 def main():
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
         
         # Per Rubric, prompt user if they want to see the raw data
-        i = 0
-        more_data = input('\nWould you like to see the first 5 rows of raw data? Enter yes or no:\n')
-        while more_data.lower() == 'yes':
-            df_slice = df.iloc[i:i+5]
-            print(df_slice)
-            i += 5
-            more_data = input('\nWould you like to see the next 5 rows of raw data? Enter yes or no:\n')
-
+        prompt_more_data(df)
+        
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
